@@ -1,0 +1,52 @@
+.main-section {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.text-container {
+    height: 50%;
+    font-size: 20px;
+    color: black;
+    padding: 50px;
+    width: 50%;
+    text-align: center;
+    display: inline-block;
+}
+
+#progress-svg {
+    opacity: 0.4;
+    position: absolute;
+    bottom: 50px;
+    left: 25%;
+    z-index: -1;
+    width: 20%;
+}
+
+
+
+.text-container h1 {
+    color: #c13c28;
+
+}
+
+.text-container .statement {
+    padding-top: 10px;
+}
+
+.go-to-btn {
+    background-color: #eda739;
+    border: black 1px dotted; 
+}
+
+.go-to-btn:hover {
+    border: 1px solid black;
+}
+
+@media screen and (max-width: 600px) {
+    .text-container {
+      width: 80%;
+    }
+  }
