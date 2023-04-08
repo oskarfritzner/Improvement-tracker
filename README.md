@@ -2,7 +2,6 @@
 
 <h1>Improvement Tracker</h1>
 
-
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -57,10 +56,14 @@ To get a local copy up and running follow these simple example steps.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-<!-- ROADMAP -->
+<!-- Progress -->
 ## PROGRESS
 
+<!--Learning-->
+<p>
 
+
+</p>
 <!-- CONTRIBUTING -->
 ## Contributing
 
