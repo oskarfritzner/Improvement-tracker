@@ -1,0 +1,11 @@
+<span>07.04.2023</span> Currently only focusing on the styling. Ive also researched how i can create a loggin system with only knowing a small amount of java.
+  Think its going to be firebase, so i will need to learn this and how it works.
+
+  Notes from first youtube video: 
+  - you need node.js on your computer. 
+  - create project on firebase.
+  - manage resources from here
+
+08.04.2023 - 
+Okay så etter å ha utforsket hva som trengs for å bruke firebase, skjønner jeg at jeg at det er par ting jeg bør skjønne litt bedre. 
+1. Asyncronomisk code meaning that the action will not be executed syncronomously with the code, but rather happen at some stage.

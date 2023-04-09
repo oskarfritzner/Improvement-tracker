@@ -1,4 +1,5 @@
 const addButtonList = document.querySelectorAll('.add-to-do-btn');
+const habits = [];
 
 /*
 Here's a brief explanation of what the code does:
@@ -21,7 +22,12 @@ addButtonList.forEach(function(button) {
     const inputField = participantContainer.querySelector('input[type="text"]');
     const inputValue = inputField.value.trim();
 
+    console.log(inputValue);
+
     if (inputValue !== '') {
+      habits.push(inputValue);
+      localStorage.setItem("habits", JSON.stringify(habits));
+      
       const toDoList = participantContainer.querySelector('.to-do');
       const newLi = document.createElement('li');
       newLi.classList.add('checkbox-container');
