@@ -1,5 +1,9 @@
 /*To-do-section*/
 /*Container around the whole div*/
+
+h2 {
+    margin: 20px;
+}
 .to-do-list {
     text-align: center;
 }
@@ -49,7 +53,9 @@
 }
 
 .p-container .add-to-do-btn {
-    padding: 0 10px;
+    background-color: #eda739;
+    width: 80px;
+    height: 40px;
     border-radius: 10%;
 
 }
@@ -90,7 +96,7 @@
 }
 
 .check-habit.completed {
-    background-color: #4CAF50;
+    background-color: #6bff70;
     color: #fff;
   }
 
@@ -101,6 +107,36 @@
     width: 30px;
     border-radius: 10%;
 }
+
+.user-table-container {
+    margin: 50px 0 50px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+    text-align: center;
+}
+
+#user-table {
+    text-align: center;
+    width: 90%;
+    border-collapse: collapse;
+}
+
+#user-table thead{
+    height: 30px;
+    border-bottom: 2px solid black;
+    border-top: 2px solid black;
+}
+
+#user-table th {
+    width: 12.5%;
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+}
+
+
 
 
 @media screen and (max-width: 800px) {

@@ -14,6 +14,9 @@ if (!localStorage.getItem("hasVisited")) {
   usernameH1.innerHTML = localStorage.getItem("user");
 }
 
+//Static user-data
+const username = localStorage.getItem("user");
+
 // Get stored habits from local storage or set an empty array
 const storedHabits = JSON.parse(localStorage.getItem("habits")) || [];
 const habits = storedHabits;
@@ -51,7 +54,9 @@ addButtonList.forEach(function (button) {
     const inputValue = inputField.value.trim();
 
     if (inputValue !== "") {
-      habits.push({habit: inputValue, finishedHabit: false});
+      // When adding a new habit
+      habits.push({habit: inputValue, completedDates: []});
+
       localStorage.setItem("habits", JSON.stringify(habits));
 
       const toDoList = participantContainer.querySelector(".to-do");
@@ -99,10 +104,44 @@ userhabitsSection.addEventListener("click", function (event) {
     
     const habitValue = event.target.value;
     const habitIndex = habits.findIndex(habitObj => habitObj.habit === habitValue);
+    const todaysDate = new Date();
 
     if (habitIndex > -1) {
       habits[habitIndex].finishedHabit = !habits[habitIndex].finishedHabit;
+      habits[habitIndex].completedDates.push(todaysDate);
       localStorage.setItem("habits", JSON.stringify(habits));
+
     }
   }
 });
+
+//Generating pdf
+const getPdfBtn = document.getElementById('get-pdf-btn');
+getPdfBtn.addEventListener('click', generatePDF);
+
+function generatePDF() {
+  const pdf = new jsPDF();
+  const title = `${username} - Habit tracker`;
+
+  pdf.setFontSize(22);
+  pdf.setTextColor(0, 0, 0);
+  pdf.text(title, 20, 30);
+
+  const xOffset = 20;
+  let yOffset = 50;
+
+  habits.forEach((habitObj, index) => {
+    const habitText = `${index + 1}. ${habitObj.habit} - ${
+      habitObj.finishedHabit ? "Completed" : "Not Completed"
+    }`;
+
+    pdf.setFontSize(16);
+    pdf.setTextColor(0, 0, 0);
+    pdf.text(habitText, xOffset, yOffset);
+    yOffset += 15;
+  });
+
+  pdf.save("HabitTracker.pdf");
+}
+
+

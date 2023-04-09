@@ -9,3 +9,19 @@
 08.04.2023 - 
 Okay så etter å ha utforsket hva som trengs for å bruke firebase, skjønner jeg at jeg at det er par ting jeg bør skjønne litt bedre. 
 1. Asyncronomisk code meaning that the action will not be executed syncronomously with the code, but rather happen at some stage.
+
+09.04.2023 - gjorde om prosjektet Improvement tracker til en solo versjon ved bruk av localStorage. Dette for å lære mer om dette og hvordan det fungerer samt og få gjort ferdig en del av prosjektet. 
+Vanskelighetsgraden passet bedre, og jeg har idag lært masse. 
+
+Jeg har hittil kl.15.15
+- lagd funksjon for å lagre brukernavn i localstorage ved hjelp av prompt.
+- Gjort om js koden til å lagre habits i localstorage slik at disse alltid vises når bruker som har vært her tidligere får disse opp. 
+- Lagd localstorage.clear funksjon. 
+- editet designet. 
+
+Planen for prosjektet videre er at man skal kunne ticke av hver dag for når en har gjort en habit.
+Mna skal kunne ha mulighet til å skrive ut pdf med dataen sin når mna vil, og den kan også sendes hver uke(eller kanskje det går å sende rett før det blir slutt for å ikke miste data? <undersøk funksjon videre>)
+
+Jeg har hittl 15.15
+Lagd en funksjon for å sende til pdf så dette fungerer som det skal. 
+Lagt om til at habits også skal lagre en array med hvilket datoer den skal lagre. Disse kan brukes til å skrive ut til tabell senere, eller kanskje importere en kalender og jobbe med den?
