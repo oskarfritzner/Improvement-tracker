@@ -1,21 +1,24 @@
-const putUserNameOutput = document.getElementById("user-name-h2");
-
-if (!localStorage.getItem("hasVisited")) {
-  let username = prompt("Velkommen til din personlige HabitTracker! Hva heter du?");
-
-  localStorage.setItem("user", username);
-  putUserNameOutput.innerHTML = localStorage.getItem("user");
-  localStorage.setItem("hasVisited", true);
-} else {
-  putUserNameOutput.innerHTML = localStorage.getItem("user");
-}
-
+// Get DOM elements
+const usernameH1 = document.getElementById("user-name-h1");
 const addButtonList = document.querySelectorAll(".add-to-do-btn");
 const userhabitsSection = document.getElementById("user-habits-section");
+const clearDataBtn = document.getElementById("clear-local-btn");
 
+// Check if the user has visited the page before
+if (!localStorage.getItem("hasVisited")) {
+  const username = prompt("Velkommen til din personlige HabitTracker! Hva heter du?");
+  localStorage.setItem("user", username);
+  usernameH1.innerHTML = localStorage.getItem("user");
+  localStorage.setItem("hasVisited", true);
+} else {
+  usernameH1.innerHTML = localStorage.getItem("user");
+}
+
+// Get stored habits from local storage or set an empty array
 const storedHabits = JSON.parse(localStorage.getItem("habits")) || [];
 const habits = storedHabits;
 
+// Function to show stored habits
 function showStoredHabits(habits) {
   habits.forEach((habitObj) => {
     const newLi = document.createElement("li");
@@ -29,9 +32,17 @@ function showStoredHabits(habits) {
   });
 }
 
+function clearUserData() {
+  localStorage.clear();
+  location.reload();
+}
 
+clearDataBtn.addEventListener("click", clearUserData);
+
+// Display stored habits
 showStoredHabits(habits);
 
+// Add event listeners for add buttons
 addButtonList.forEach(function (button) {
   button.addEventListener("click", function (event) {
     event.preventDefault();
@@ -40,9 +51,8 @@ addButtonList.forEach(function (button) {
     const inputValue = inputField.value.trim();
 
     if (inputValue !== "") {
-      habits.push({habit:inputValue, finishedHabit: false});
+      habits.push({habit: inputValue, finishedHabit: false});
       localStorage.setItem("habits", JSON.stringify(habits));
-  
 
       const toDoList = participantContainer.querySelector(".to-do");
       const newLi = document.createElement("li");
@@ -60,6 +70,7 @@ addButtonList.forEach(function (button) {
   });
 });
 
+// Function to remove a habit
 function removeHabit(event) {
   const habitLi = event.target.closest("li");
   const habitButton = habitLi.querySelector("button.check-habit");
@@ -73,13 +84,15 @@ function removeHabit(event) {
   habitLi.remove();
 }
 
-
+// Event listener for removing a habit
 userhabitsSection.addEventListener("click", function (event) {
   if (event.target.classList.contains("remove-habit")) {
     removeHabit(event);
   }
 });
 
+
+// Event listener for checking a habit
 userhabitsSection.addEventListener("click", function (event) {
   if (event.target.classList.contains("check-habit")) {
     event.target.classList.toggle("completed");

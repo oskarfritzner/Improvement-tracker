@@ -21,7 +21,7 @@
 
 .p-container {
     border: 1px solid black;
-    width: 60%;
+    width: 600px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
 }

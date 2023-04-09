@@ -32,6 +32,8 @@
           <li class="nav-item">
             <a href="tracker.html" class="nav-link nav-tracker">Tracker</a>
           </li>
+          <button class="nav-btns" id="clear-local-btn">Start over</button>
+          <button class="nav-btns" id="get-pdf-btn">Get pdf</button>
         </ul>
       </div>
     </div>
@@ -40,11 +42,12 @@
 
 <section class="to-do-list">
     <div>
-        <h1>To-Do-List</h1>
+        <h1><span id="user-name-h1"></span></h1>
       </div>
         <div class="to-do-container">
             <div class="p-container">
-                  <h2 id="user-name-h2"></h2>
+                  <h2 id="user-name-h2">Daily Habits</h2>
+                  <p>Enter your habits here, and tick them of everyday. </p>
             <form class="add-habit-container">
                   <input class="habit-inputs" type="text" id="p1-input" placeholder="Enter a new habit">
                   <div class="habit-btns">
@@ -55,7 +58,7 @@
                   <ul id="user-habits-section" class="to-do">
                   </ul>
                 </div>
-            </div> 
+            </div>
         </div>
     </section>
     
