@@ -118,26 +118,26 @@ h2 {
     text-align: center;
 }
 
-#user-table {
-    text-align: center;
-    width: 90%;
+.user-table {
     border-collapse: collapse;
-}
-
-#user-table thead{
-    height: 30px;
-    border-bottom: 2px solid black;
-    border-top: 2px solid black;
-}
-
-#user-table th {
-    width: 12.5%;
-    border-left: 2px solid #000;
-    border-right: 2px solid #000;
-}
-
-
-
+    width: 100%;
+  }
+  
+  .user-table th,
+  .user-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .user-table thead {
+    background-color: #f2f2f2;
+  }
+  
+  .user-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
 
 @media screen and (max-width: 800px) {
     .to-do-container {

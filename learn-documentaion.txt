@@ -25,3 +25,9 @@ Mna skal kunne ha mulighet til å skrive ut pdf med dataen sin når mna vil, og 
 Jeg har hittl 15.15
 Lagd en funksjon for å sende til pdf så dette fungerer som det skal. 
 Lagt om til at habits også skal lagre en array med hvilket datoer den skal lagre. Disse kan brukes til å skrive ut til tabell senere, eller kanskje importere en kalender og jobbe med den?
+
+Neste gang må jeg:
+- fikse slette funksjonen så den også sletter habitten fra table. 
+- Adde check eller ikke fullført på hver habit den dagen det gjelder. 
+- Finne ut hvordan jeg kan skrive ut html av table til pdf så det ser fint ut. 
+- style siden bedre. 
