@@ -30,13 +30,7 @@
       <div class="collapse navbar-collapse" id="navmenu">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a href="index.html" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item">
             <a href="tracker.html" class="nav-link nav-tracker">Tracker</a>
-          </li>
-          <li class="nav-item">
-            <a href="logginn.html" class="nav-link">Logg inn</a>
           </li>
         </ul>
       </div>
@@ -50,33 +44,20 @@
       </div>
         <div class="to-do-container">
             <div class="p-container">
-                  <h2>Participant 1</h2>
+                  <h2 id="user-name-h2"></h2>
             <form class="add-habit-container">
                   <input class="habit-inputs" type="text" id="p1-input" placeholder="Enter a new habit">
-                  <button class="add-to-do-btn" type="submit">Add</button>                 
+                  <div class="habit-btns">
+                    <button class="add-to-do-btn" type="submit">Add</button>                 
+                  </div>
               </form>
-            <form>
-                  <ul class="to-do">
+            <div>
+                  <ul id="user-habits-section" class="to-do">
                   </ul>
-                </form>
-            </div>
-              <!--
-                <div class="p-container">
-                    <h2>Participant 2</h2>
-                    <form class="add-habit-container">
-                      <input class="habit-inputs" type="text" id="p2-input" placeholder="Enter a new habit">
-                      <button class="add-to-do-btn" type="submit">Add</button>                 
-                    </form>
-                    <form>
-                      <ul class="to-do">
-                      </ul>
-                    </form>
                 </div>
-              -->
-              
+            </div> 
         </div>
     </section>
-
     
 
 
