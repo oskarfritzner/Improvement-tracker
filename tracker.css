@@ -88,23 +88,46 @@ h2 {
     text-align: center;
     align-items: flex-start;
     justify-content: space-between;
+    margin-top: 10px;
 }
 
-.habit-btns-div {
-    height: 100%;
-    width: 60px;
+.habit-div {
+    flex: 1;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid black;
 }
 
-.habit-btns {
-    border-radius: 3px;
-    outline: none;
-    width: 50%;
+.remove-habit {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+}
+
+.checkbox-container label {
+    margin-left: 20px;
+    font-size: 20px;
+    text-align: start;
+    width: 250px;
+    word-wrap: break-word;
+}
+
+.complete-div {
+    width: 200px;
     height: 30px;
+    display: flex;
+    justify-content: end;
+    
+}
+
+.habit-time {
+    width: 50px;
+    margin-right: 5px;
 }
 
 .check-habit {
+    width: 30px;
     border: 1px solid black;
     background-color: transparent;
     transition: background-color 0.3s;
@@ -114,10 +137,6 @@ h2 {
     background-color: #6bff70;
     color: #fff;
   }
-
-.remove-habit {
-    background-color: red;
-}
 
 .user-table-container {
     margin: 50px 0 50px 0;

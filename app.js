@@ -107,16 +107,17 @@ function showStoredHabits(habits) {
     const newLi = document.createElement("li");
     newLi.classList.add("checkbox-container");
     newLi.innerHTML = `
-        <label for="${habitObj.habit}-button">${habitObj.habit}</label>
-        <div class="habit-btns-div">
-          <button class="check-habit habit-btns ${
-            isHabitCompletedToday(habitObj) ? "completed" : ""
-          }" id="${habitObj.habit}-button" name="myCheckbox" value="${
-      habitObj.habit
-    }">&#x2713;</button>
-          <button class="remove-habit habit-btns">X</button>
-        </div>
-      `;
+    <div class="habit-div">
+    <button class="remove-habit habit-btns">X</button>
+    <label for="${habitObj.habit}-button">${habitObj.habit}</label>
+    </div>
+    <div class="complete-div">
+    <input type="number" class="habit-time" min="0" placeholder="minutes"/>
+    <button class="check-habit habit-btns ${
+      isHabitCompletedToday(habitObj) ? "completed" : ""
+    }" id="${habitObj.habit}-button" name="myCheckbox" value="${habitObj.habit}">&#x2713;</button>
+    </div>
+    `;  
     userhabitsSection.appendChild(newLi);
   });
 }
@@ -142,6 +143,7 @@ function addHabit(event) {
       habits.push({
         habit: inputValue,
         completedDates: [],
+        completedTime: {},
         createdAt: new Date().toISOString(),
       });
 
@@ -151,12 +153,15 @@ function addHabit(event) {
       const newLi = document.createElement("li");
       newLi.classList.add("checkbox-container");
       newLi.innerHTML = `
-        <label for="${inputValue}-button">${inputValue}</label>
-        <div class="habit-btns-div">
-        <button class="check-habit habit-btns" id="${inputValue}-button" name="myCheckbox" value="${inputValue}">&#x2713;</button>
-        <button class="remove-habit habit-btns">X</button>
-        </div>
-      `;
+      <div class="habit-div">
+      <button class="remove-habit habit-btns">X</button>
+      <label for="${inputValue}-button">${inputValue}</label>
+      </div>
+      <div class="complete-div">
+      <input type="number" class="habit-time" min="0" placeholder="minutes"/>
+      <button class="check-habit habit-btns" id="${inputValue}-button" name="myCheckbox" value="${inputValue}">&#x2713;</button>
+      </div>
+      `;      
       toDoList.appendChild(newLi);
       newLi.querySelector(".remove-habit").addEventListener("click", removeHabit);
 
@@ -193,7 +198,7 @@ function removeHabit(event) {
     updateTableUI(habits);
 }
 
-//Function for completing habit. 
+// Function for completing habit
 
 function completeHabit(event) {
   if (event.target.classList.contains("check-habit")) {
@@ -204,11 +209,16 @@ function completeHabit(event) {
     const todaysDate = new Date().toISOString().slice(0, 10);
 
     if (habitIndex > -1) {
+      const timeInput = event.target.closest('.checkbox-container').querySelector('.habit-time');
+      const timeSpent = parseInt(timeInput.value, 10) || 0;
+
       const dateIndex = habits[habitIndex].completedDates.indexOf(todaysDate);
       if (dateIndex > -1) {
         habits[habitIndex].completedDates.splice(dateIndex, 1);
+        delete habits[habitIndex].completedTime[todaysDate];
       } else {
         habits[habitIndex].completedDates.push(todaysDate);
+        habits[habitIndex].completedTime[todaysDate] = timeSpent;
       }
 
       localStorage.setItem("habits", JSON.stringify(habits));
@@ -218,55 +228,52 @@ function completeHabit(event) {
 }
 
 
+
 //Update Data-table UI
 
 function updateTableUI(habitsArr) {
-    // Remove all rows that correspond to removed habits
-    Array.from(habitTableBody.children).forEach((row, index) => {
-      if (index >= habitsArr.length) {
-        row.remove();
-      }
-    });
+  // Remove all rows that correspond to removed habits
+  Array.from(habitTableBody.children).forEach((row, index) => {
+    if (index >= habitsArr.length) {
+      row.remove();
+    }
+  });
 
   habitsArr.forEach((habitObj, habitIndex) => {
     let habitRow = habitTableBody.children[habitIndex];
 
+    // Create a new row if it doesn't exist
     if (!habitRow) {
-      // Create a new row if it doesn't exist
       habitRow = document.createElement("tr");
-      const newHabitCell = document.createElement("td");
-      newHabitCell.textContent = habitObj.habit;
-      habitRow.appendChild(newHabitCell);
       habitTableBody.appendChild(habitRow);
 
-      // Add cells for each day of the week
-      for (let i = 0; i < 7; i++) {
-        const dayCell = document.createElement("td");
-        habitRow.appendChild(dayCell);
+      // Create cells for the new row
+      for (let i = 0; i < 8; i++) {
+        const cell = document.createElement("td");
+        habitRow.appendChild(cell);
       }
     }
 
-    // Calculate the start date of the current week (Monday)
+    // Set the habit name
+    habitRow.children[0].textContent = habitObj.habit;
+
     const today = new Date();
-    const currentWeekday = today.getDay() === 0 ? 7 : today.getDay();
-    const daysSinceMonday = 1 - currentWeekday;
-    const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + daysSinceMonday);
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1));
     const startOfWeekFormatted = startOfWeek.toISOString().slice(0, 10);
 
-    // Update cells for each day of the week
+    // Update habit completion status for each day
     for (let i = 0; i < 7; i++) {
+      const dayDate = new Date(startOfWeek);
+      dayDate.setDate(dayDate.getDate() + i);
+      const formattedDate = dayDate.toISOString().slice(0, 10);
+
       const dayCell = habitRow.children[i + 1];
 
-      // Check if habit is completed on this day
-      const daysSinceMonday = i - currentWeekday + 2;
-      const date = new Date(today.getFullYear(), today.getMonth(), today.getDate() + daysSinceMonday);
-      const formattedDate = date.toISOString().slice(0, 10);
       const isCompleted = habitObj.completedDates.includes(formattedDate);
-      const habitCreationDate = habitObj.createdAt.slice(0, 10);
 
-      // Check if date is between the start of the current week and today (inclusive)
       if (formattedDate >= startOfWeekFormatted && formattedDate <= today.toISOString().slice(0, 10)) {
-        const newContent = isCompleted ? "Completed" : "X";
+        const newContent = isCompleted ? `Completed (${habitObj.completedTime[formattedDate] || 0} min)` : "X";
 
         if (dayCell.textContent !== newContent) {
           // Add the fade class to smoothly hide the content
@@ -287,6 +294,7 @@ function updateTableUI(habitsArr) {
   });
 }
 
+
 //Generating and working with the pdf
 
 getPdfBtn.addEventListener('click', generatePDF);
@@ -301,19 +309,52 @@ function generatePDF() {
 
   const xOffset = 20;
   let yOffset = 50;
+  const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   habits.forEach((habitObj, index) => {
-    const habitText = `${index + 1}. ${habitObj.habit} - ${
-      isHabitCompletedToday(habitObj) ? "Completed" : "Not Completed"
-    }`;
+    const habitText = `${index + 1}. ${habitObj.habit}`;
 
     pdf.setFontSize(16);
     pdf.setTextColor(0, 0, 0);
     pdf.text(habitText, xOffset, yOffset);
     yOffset += 15;
+
+    const today = new Date();
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1));
+
+    weekDays.forEach((day, dayIndex) => {
+      const dayDate = new Date(startOfWeek);
+      dayDate.setDate(dayDate.getDate() + dayIndex);
+      const formattedDate = dayDate.toISOString().slice(0, 10);
+      const isCompleted = habitObj.completedDates.includes(formattedDate);
+      const dayTimeSpent = habitObj.completedTime[formattedDate] || 0;
+
+      const dayStatusText = `${day}: ${
+        isCompleted ? `Completed (${dayTimeSpent} min)` : "Not Completed"
+      }`;
+
+      pdf.setFontSize(14);
+      pdf.setTextColor(0, 0, 0);
+      pdf.text(dayStatusText, xOffset + 10 + dayIndex * 35, yOffset);
+    });
+
+    yOffset += 15;
   });
 
   pdf.save("HabitTracker.pdf");
 }
+
+
+
+/* THINGS TO IMPLEMENT
+
+1. Make pdf export look nice
+2. Created a user manual for first timers, and on btn click. 
+3. funksjon which clears data at localStorage capacity and alerts user some time before reaching max-capacity.
+4. Input time on each habit everyday that can calculate how many hours spent on each habit. 
+5. maybe add google calender api to the page
+
+*/
 
 
