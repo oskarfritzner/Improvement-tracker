@@ -39,3 +39,6 @@ Jeg har også lagt på en effect så den oppdaterer seg smoothly når en forandr
 Jeg har endret på styling slik at Habits leggeer seg med likt space bettween og knappene ligger fint ved siden av hverandre. 
 Jeg har også opprettet en funksjon for å reset table UI hver uke SLik at det blir en weekly tracker. 
 
+endret veldig mye idag og fikset de viktigste delene. pdt fungerer fint og alt av habit adding og removing fra ui.
+ Har lagt til goals og thankful for sections, samt en quotes section jeg vil ha hidden fremtil p.container har lengre x lengde enn goals-containeren men problem her... 
+

@@ -112,7 +112,7 @@ function showStoredHabits(habits) {
     <label for="${habitObj.habit}-button">${habitObj.habit}</label>
     </div>
     <div class="complete-div">
-    <input type="number" class="habit-time" min="0" placeholder="minutes"/>
+    <input type="number" class="habit-time" min="0" placeholder="min"/>
     <button class="check-habit habit-btns ${
       isHabitCompletedToday(habitObj) ? "completed" : ""
     }" id="${habitObj.habit}-button" name="myCheckbox" value="${habitObj.habit}">&#x2713;</button>
@@ -158,7 +158,7 @@ function addHabit(event) {
       <label for="${inputValue}-button">${inputValue}</label>
       </div>
       <div class="complete-div">
-      <input type="number" class="habit-time" min="0" placeholder="minutes"/>
+      <input type="number" class="habit-time" min="0" placeholder="min"/>
       <button class="check-habit habit-btns" id="${inputValue}-button" name="myCheckbox" value="${inputValue}">&#x2713;</button>
       </div>
       `;      
@@ -226,8 +226,6 @@ function completeHabit(event) {
     }
   }
 }
-
-
 
 //Update Data-table UI
 
@@ -300,61 +298,84 @@ function updateTableUI(habitsArr) {
 getPdfBtn.addEventListener('click', generatePDF);
 
 function generatePDF() {
-  const pdf = new jsPDF();
-  const title = `${username} - Habit tracker`;
+  const pdf = new jsPDF('p', 'pt', 'a4');
+  pdf.html(document.querySelector('.user-table-container'), {
+    callback: function (pdf) {
+      const timePerHabit = calculateTimePerHabit();
+      const userName = localStorage.getItem("username");
 
-  pdf.setFontSize(22);
-  pdf.setTextColor(0, 0, 0);
-  pdf.text(title, 20, 30);
+      // Add personalized title
+      pdf.setFontSize(22);
+      pdf.text(40, 40, `${userName}'s Weekly Habit Review`);
 
-  const xOffset = 20;
-  let yOffset = 50;
-  const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      // Add total time spent on habits
+      pdf.setFontSize(12);
+      let habitTotalYPosition = 80;
+      for (const [habit, time] of Object.entries(timePerHabit)) {
+        pdf.text(40, habitTotalYPosition, `${habit}: ${time}`);
+        habitTotalYPosition += 15;
+      }
 
-  habits.forEach((habitObj, index) => {
-    const habitText = `${index + 1}. ${habitObj.habit}`;
-
-    pdf.setFontSize(16);
-    pdf.setTextColor(0, 0, 0);
-    pdf.text(habitText, xOffset, yOffset);
-    yOffset += 15;
-
-    const today = new Date();
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1));
-
-    weekDays.forEach((day, dayIndex) => {
-      const dayDate = new Date(startOfWeek);
-      dayDate.setDate(dayDate.getDate() + dayIndex);
-      const formattedDate = dayDate.toISOString().slice(0, 10);
-      const isCompleted = habitObj.completedDates.includes(formattedDate);
-      const dayTimeSpent = habitObj.completedTime[formattedDate] || 0;
-
-      const dayStatusText = `${day}: ${
-        isCompleted ? `Completed (${dayTimeSpent} min)` : "Not Completed"
-      }`;
-
-      pdf.setFontSize(14);
-      pdf.setTextColor(0, 0, 0);
-      pdf.text(dayStatusText, xOffset + 10 + dayIndex * 35, yOffset);
-    });
-
-    yOffset += 15;
+      pdf.save('Weekly_Tracker.pdf');
+    },
+    x: 0,
+    y: 80,
+    html2canvas: { scale: 0.49},
   });
-
-  pdf.save("HabitTracker.pdf");
 }
 
 
+document.getElementById('get-pdf-btn').addEventListener('click', generatePDF);
 
-/* THINGS TO IMPLEMENT
+//calculate the time per habit
 
-1. Make pdf export look nice
-2. Created a user manual for first timers, and on btn click. 
-3. funksjon which clears data at localStorage capacity and alerts user some time before reaching max-capacity.
-4. Input time on each habit everyday that can calculate how many hours spent on each habit. 
-5. maybe add google calender api to the page
+function calculateTimePerHabit() {
+  const habitRows = document.querySelectorAll('.user-table tbody tr');
+  const habitTimes = {};
 
-*/
+  for (const habitRow of habitRows) {
+    const habitName = habitRow.querySelector('td:first-child').textContent.trim();
+    const timeCells = habitRow.querySelectorAll('td:not(:first-child)');
+    let habitTotalMinutes = 0;
+
+    for (const timeCell of timeCells) {
+      const timeText = timeCell.textContent.trim();
+      if (timeText.startsWith('Completed')) {
+        const minutes = parseInt(timeText.match(/\d+/)[0], 10);
+        habitTotalMinutes += minutes;
+      }
+    }
+
+    const habitTotalHours = Math.floor(habitTotalMinutes / 60);
+    const remainingMinutes = habitTotalMinutes % 60;
+
+    habitTimes[habitName] = `${habitTotalHours}h ${remainingMinutes}m`;
+  }
+
+  return habitTimes;
+}
+const total = calculateTimePerHabit();
+console.log(total);
+
+
+/*fix this next time*/
+function updateQuotesContainerVisibility() {
+  const pContainer = document.querySelector('.p-container');
+  const goalsContainer = document.querySelector('.goals-container');
+  const thankfulContainer = document.querySelector('.thankful-container');
+  const quotesContainer = document.querySelector('.quotes-container');
+
+  if (pContainer.offsetHeight > (goalsContainer.offsetHeight)) {
+    quotesContainer.style.display = 'block';
+  } else {
+    quotesContainer.style.display = 'none';
+  }
+}
+
+// Call the function initially to set the correct visibility
+updateQuotesContainerVisibility();
+
+// Add an event listener to update the visibility when the window is resized
+window.addEventListener('resize', updateQuotesContainerVisibility);
 
 

@@ -1,9 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+body {
+    background-color: #f1f1ee;
+    position: relative;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+/*All navbar styling*/
+
+.nav-tracker {
+    color: #c13c28;
+}
+
+.nav-btns {
+    width: 100px;
+    font-weight: 600;
+    margin: 0 5px;
+    border-radius: 20px;
+
+}
+
+#clear-local-btn {
+    background-color: #c13c28;
+    color: white;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#clear-local-btn:hover {
+    background-color: #e05745;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#get-pdf-btn {
+    background-color: #2c3e50;
+    color: white;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  #get-pdf-btn:hover {
+    background-color: #34495e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
 /*To-do-section*/
 /*Container around the whole div*/
 
-h2 {
-    margin: 20px;
-}
+
 .to-do-list {
     text-align: center;
 }
@@ -15,19 +70,23 @@ h2 {
 /*Container around all participants*/
 
 .to-do-container {
-    display: flex;
-    max-width: 100%;
-    margin: 10px;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: 50% 25% 25%;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "p-container goals-container thankful-container"
+      "p-container quotes-container quotes-container";
+    column-gap: 1rem;
+    row-gap: 1rem;
 }
 
-/*Each participants container of habits and the childs styling*/
+/*Habits section*/
 
 .p-container {
+    grid-area: p-container;
     border: 1px solid black;
-    width: 600px;
     border-radius: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     display: flex;
     text-align: center;
     flex-direction: column;
@@ -36,7 +95,7 @@ h2 {
 
 }
 
-.p-container h2{
+h2 {
     padding-top: 10px;
     margin-bottom: 20px;
 }
@@ -52,7 +111,7 @@ h2 {
 
 .p-container .habit-inputs {
     width: 60%;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     height: 40px;
     padding-left: 10px;
     border-radius: 20px;
@@ -96,13 +155,19 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid black;
+    text-align: center;
 }
 
 .remove-habit {
-    width: 20px;
-    height: 20px;
+    font-size: 10px;
+    background-color: rgb(245, 60, 60);
+    height: 30px;
+    width: 30px;
+}
+
+.remove-habit:hover {
     background-color: red;
+    font-size: 16px;
 }
 
 .checkbox-container label {
@@ -137,6 +202,59 @@ h2 {
     background-color: #6bff70;
     color: #fff;
   }
+
+.check-habit.completed:hover {
+    background-color: #6bff706c;
+}
+
+/*Goals section*/
+.goals-container {
+    grid-area: goals-container;
+    border: 1px solid black;
+    height: 300px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.goals-container .goals-input {
+    margin: 0 10px;
+    padding-left: 5px;
+}
+
+.goals-container h3, .thankful-container h3{
+    font-size: 22px;
+    margin-top: 40px;
+}
+
+/*Thankful container*/
+.thankful-container {
+    grid-area: thankful-container;
+    border: 1px solid black;
+    height: 300px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+
+.thankful-container .thankful-input {
+    margin: 0 10px;
+}
+
+/*Quotes section*/
+.quotes-container {
+    grid-area: quotes-container;
+    border: 1px solid black;
+    display: none;
+}
+
+/*User-table-container*/
 
 .user-table-container {
     margin: 50px 0 50px 0;

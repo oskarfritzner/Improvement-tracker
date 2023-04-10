@@ -8,8 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
     rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" 
     crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="tracker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.3/html2canvas.min.js"></script>
 </head>
 <body>
 <!-- Navbar -->
@@ -56,8 +56,26 @@
 
                 </ul>
             </div>
+            <div class="goals-container">
+              <h3>My goals for today are...</h3>
+              <label>1.<input type="text" class="goals-input" id="goals-input1"></label>
+              <label>2.<input type="text" class="goals-input" id="goals-input2"></label>
+              <label>3.<input type="text" class="goals-input" id="goals-input3"></label>
+              <div>
+              </div>
+            </div>
+            <div class="thankful-container">
+              <h3>Today i am thankfull for...</h3>
+              <label>1.<input type="text" class="thankful-input" id="tfinput1"></label>
+              <label>2.<input type="text" class="thankful-input" id="tfinput2"></label>
+              <label>3.<input type="text" class="thankful-input" id="tfinput3"></label>
+              <div>
+              </div>
+            </div>
+            <div class="quotes-container">
+              <p id="daily-quotes-output">Haters are my motivation</p>
+            </div>
           </div>
-        </div>
       </section>
       
       <div class="user-table-container">
