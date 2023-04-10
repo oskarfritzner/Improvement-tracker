@@ -28,6 +28,12 @@ h2 {
     width: 600px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .p-container h2{
@@ -37,9 +43,9 @@ h2 {
 
 .p-container .add-habit-container {
     height: 40px;
-    width: 100%;
+    width: 80%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     text-align: center;
     align-items: center;
 }
@@ -47,51 +53,62 @@ h2 {
 .p-container .habit-inputs {
     width: 60%;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
-    height: 100%;
+    height: 40px;
     padding-left: 10px;
     border-radius: 20px;
 }
 
 .p-container .add-to-do-btn {
     background-color: #eda739;
-    width: 80px;
+    width: 60px;
     height: 40px;
-    border-radius: 10%;
-
+    border-radius: 20px;
 }
 
 .add-to-do-btn:hover {
-    background-color: #eda739;
-    transition: 0.5s ease;
+    background-color: #ffd38d;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
+
 .p-container .to-do {
+    margin: 0;
+    padding: 0;
+    width: 80%;
     margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    margin-bottom: 20px;
 }
 
 .checkbox-container {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
     display: flex;
+    text-align: center;
+    align-items: flex-start;
     justify-content: space-between;
-    font-size: 1.2em;
-    margin-bottom: 5px;
 }
 
-.checkbox-container label {
-    margin-right: 5px;
+.habit-btns-div {
+    height: 100%;
+    width: 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.habit-btns {
+    border-radius: 3px;
+    outline: none;
+    width: 50%;
+    height: 30px;
 }
 
 .check-habit {
+    border: 1px solid black;
     background-color: transparent;
-    border-radius: 3px;
     color: #000;
     cursor: pointer;
-    font-size: 16px;
-    outline: none;
-    height: 30px;
-    width: 30px;
     transition: background-color 0.3s;
 }
 
@@ -102,10 +119,6 @@ h2 {
 
 .remove-habit {
     background-color: red;
-    text-align: center;
-    height: 30px;
-    width: 30px;
-    border-radius: 10%;
 }
 
 .user-table-container {
@@ -120,7 +133,8 @@ h2 {
 
 .user-table {
     border-collapse: collapse;
-    width: 100%;
+    width: 90%;
+    margin-bottom: 40px;
   }
   
   .user-table th,
@@ -128,6 +142,10 @@ h2 {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
+  }
+
+  .user-table td {
+    width: 12.5%;
   }
   
   .user-table thead {
@@ -137,6 +155,12 @@ h2 {
   .user-table tbody tr:nth-child(even) {
     background-color: #f2f2f2;
   }
+
+  .fade {
+    opacity: 0;
+    transition: opacity 0.1s;
+  }
+
   
 
 @media screen and (max-width: 800px) {

@@ -6,7 +6,6 @@ const getPdfBtn = document.getElementById('get-pdf-btn');
 const userhabitsSection = document.getElementById("user-habits-section");
 const habitTableBody = document.querySelector(".user-table tbody");
 
-
 // Check if the user has visited the page before and set their name
 function setUserName() {
   if (!localStorage.getItem("hasVisited")) {
@@ -54,6 +53,7 @@ function resetHabitsAtMidnight() {
       habitObj.finishedHabit = false;
     });
     localStorage.setItem("habits", JSON.stringify(habits));
+    updateTableUI(habits);
     location.reload();
     resetHabitsAtMidnight();
   }, timeToNextMidnight);
@@ -61,6 +61,25 @@ function resetHabitsAtMidnight() {
 
 // Call the function to reset habits at midnight
 resetHabitsAtMidnight();
+
+function resetHabitsWeekly() {
+  const now = new Date();
+  const daysUntilNextMonday = (8 - now.getDay()) % 7;
+  const nextMonday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + daysUntilNextMonday, 0, 0, 0);
+  const timeToNextMonday = nextMonday - now;
+
+  setTimeout(() => {
+    // Refresh the UI without clearing the habit data
+    updateTableUI(habits);
+
+    // Call the function again to set up the next reset
+    resetHabitsWeekly();
+  }, timeToNextMonday);
+}
+
+// Call the function to reset habits weekly
+resetHabitsWeekly();
+
 
 // Function to show stored habits
 function showStoredHabits(habits) {
@@ -80,24 +99,6 @@ function showStoredHabits(habits) {
   });
 }
 
-//Function for retreiving data from localstorage and creating the habit table.
-function showHabitTable(habits) {
-  habits.forEach((habitObj) => {
-    const newRow = document.createElement("tr");
-    const habitCell = document.createElement("td");
-    habitCell.textContent = habitObj.habit;
-    newRow.appendChild(habitCell);
-
-    // Add cells for each day of the week
-    for (let i = 0; i < 7; i++) {
-      const dayCell = document.createElement("td");
-      newRow.appendChild(dayCell);
-    }
-
-    habitTableBody.appendChild(newRow);
-  });
-}
-
 // Function to clear user data
 function clearUserData() {
   localStorage.clear();
@@ -109,10 +110,9 @@ clearDataBtn.addEventListener("click", clearUserData);
 
 // Display stored habits and habit-table
 showStoredHabits(habits);
-showHabitTable(habits);
+updateTableUI(habits);
 
-// Add event listeners for add buttons
-// Add event listeners for add buttons
+// Add event listener for add button
 addButtonList.forEach(function (button) {
   button.addEventListener("click", function (event) {
     event.preventDefault();
@@ -121,33 +121,36 @@ addButtonList.forEach(function (button) {
     const inputValue = inputField.value.trim();
 
     if (inputValue !== "") {
-      // When adding a new habit
-      habits.push({habit: inputValue, completedDates: []});
+      if(!habits.find(h => h.habit === inputValue)) {
 
-      localStorage.setItem("habits", JSON.stringify(habits));
+        // When adding a new habit
+        habits.push({habit: inputValue, completedDates: [], createdAt: new Date().toISOString()});
+  
+        localStorage.setItem("habits", JSON.stringify(habits));
+  
+        const toDoList = userhabitsSection;
+        const newLi = document.createElement("li");
+        newLi.classList.add("checkbox-container");
+        newLi.innerHTML = `
+          <label for="${inputValue}-button">${inputValue}</label>
+          <div class="habit-btns-div">
+          <button class="check-habit habit-btns" id="${inputValue}-button" name="myCheckbox" value="${inputValue}">&#x2713;</button>
+          <button class="remove-habit habit-btns">X</button>
+          </div>
+        `;
+        toDoList.appendChild(newLi);
+        newLi.querySelector(".remove-habit").addEventListener("click", removeHabit);
 
-      const toDoList = userhabitsSection;
-      const newLi = document.createElement("li");
-      newLi.classList.add("checkbox-container");
-      newLi.innerHTML = `
-        <label for="${inputValue}-button">${inputValue}</label>
-        <button class="check-habit" id="${inputValue}-button" name="myCheckbox" value="${inputValue}"></button>
-        <button class="remove-habit">X</button>
-      `;
-      toDoList.appendChild(newLi);
-      newLi.querySelector(".remove-habit").addEventListener("click", removeHabit);
-
-      // Add a new row to the table
-      const newRow = document.createElement("tr");
-      const newHabitCell = document.createElement("td");
-      newHabitCell.textContent = inputValue;
-      newRow.appendChild(newHabitCell);
-      habitTableBody.appendChild(newRow);
-
-      inputField.value = "";
+        updateTableUI(habits);
+  
+        inputField.value = "";
+      } else {
+        alert("Habit is already added.");
+      }
     }
   });
 });
+
 
 
 
@@ -159,21 +162,36 @@ function removeHabit(event) {
   const habitIndex = habits.findIndex(habitObj => habitObj.habit === habitValue);
 
   if (habitIndex > -1) {
-    habits.splice(habitIndex, 1);
-    localStorage.setItem("habits", JSON.stringify(habits));
+    const habitObj = habits[habitIndex];
+    if (habitObj.completedDates.length <= 1) {
+      habits.splice(habitIndex, 1);
+      localStorage.setItem("habits", JSON.stringify(habits));
+    }
+    habitLi.remove();
   }
-
-  habitLi.remove();
+    // Remove the corresponding row from the table UI
+    if (habitTableBody.children[habitIndex]) {
+      habitTableBody.children[habitIndex].remove();
+    }
+  
+    updateTableUI(habits);
 }
 
 // Event listener for removing a habit
 userhabitsSection.addEventListener("click", function (event) {
   if (event.target.classList.contains("remove-habit")) {
-    removeHabit(event);
+    const habitIndex = Array.from(userhabitsSection.children).indexOf(event.target.closest("li"));
+    removeHabit(event, habitIndex);
   }
 });
 
+
 // Event listener for checking a habit
+
+function completeHabit(event) {
+
+} 
+
 userhabitsSection.addEventListener("click", function (event) {
   if (event.target.classList.contains("check-habit")) {
     event.target.classList.toggle("completed");
@@ -189,10 +207,83 @@ userhabitsSection.addEventListener("click", function (event) {
       } else {
         habits[habitIndex].completedDates.push(todaysDate);
       }
+
       localStorage.setItem("habits", JSON.stringify(habits));
+      updateTableUI(habits);
     }
   }
 });
+
+
+//Update Data-table UI
+function updateTableUI(habitsArr) {
+    // Remove all rows that correspond to removed habits
+    Array.from(habitTableBody.children).forEach((row, index) => {
+      if (index >= habitsArr.length) {
+        row.remove();
+      }
+    });
+
+  habitsArr.forEach((habitObj, habitIndex) => {
+    let habitRow = habitTableBody.children[habitIndex];
+
+    if (!habitRow) {
+      // Create a new row if it doesn't exist
+      habitRow = document.createElement("tr");
+      const newHabitCell = document.createElement("td");
+      newHabitCell.textContent = habitObj.habit;
+      habitRow.appendChild(newHabitCell);
+      habitTableBody.appendChild(habitRow);
+
+      // Add cells for each day of the week
+      for (let i = 0; i < 7; i++) {
+        const dayCell = document.createElement("td");
+        habitRow.appendChild(dayCell);
+      }
+    }
+
+    // Calculate the start date of the current week (Monday)
+    const today = new Date();
+    const currentWeekday = today.getDay() === 0 ? 7 : today.getDay();
+    const daysSinceMonday = 1 - currentWeekday;
+    const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + daysSinceMonday);
+    const startOfWeekFormatted = startOfWeek.toISOString().slice(0, 10);
+
+    // Update cells for each day of the week
+    for (let i = 0; i < 7; i++) {
+      const dayCell = habitRow.children[i + 1];
+
+      // Check if habit is completed on this day
+      const daysSinceMonday = i - currentWeekday + 2;
+      const date = new Date(today.getFullYear(), today.getMonth(), today.getDate() + daysSinceMonday);
+      const formattedDate = date.toISOString().slice(0, 10);
+      const isCompleted = habitObj.completedDates.includes(formattedDate);
+      const habitCreationDate = habitObj.createdAt.slice(0, 10);
+
+      // Check if date is between the start of the current week and today (inclusive)
+      if (formattedDate >= startOfWeekFormatted && formattedDate <= today.toISOString().slice(0, 10)) {
+        const newContent = isCompleted ? "Completed" : "X";
+
+        if (dayCell.textContent !== newContent) {
+          // Add the fade class to smoothly hide the content
+          dayCell.classList.add("fade");
+
+          // Wait for the fade-out transition to complete
+          setTimeout(() => {
+            dayCell.textContent = newContent;
+
+            // Remove the fade class to smoothly show the content
+            dayCell.classList.remove("fade");
+          }, 500); // Match this duration with the transition duration in the CSS
+        }
+      } else {
+        dayCell.textContent = "";
+      }
+    }
+  });
+}
+
+
 
 //Generating and working with the pdf
 getPdfBtn.addEventListener('click', generatePDF);
