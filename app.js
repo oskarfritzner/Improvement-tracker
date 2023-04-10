@@ -1,4 +1,4 @@
-// Get DOM elements
+// DOM elements
 const usernameH1 = document.getElementById("user-name-h1");
 const addButtonList = document.querySelectorAll(".add-to-do-btn");
 const clearDataBtn = document.getElementById("clear-local-btn");
@@ -6,7 +6,41 @@ const getPdfBtn = document.getElementById('get-pdf-btn');
 const userhabitsSection = document.getElementById("user-habits-section");
 const habitTableBody = document.querySelector(".user-table tbody");
 
-// Check if the user has visited the page before and set their name
+// Set user's name
+setUserName();
+
+// User-data
+const username = localStorage.getItem("username");
+
+// Get stored habits from local storage or set it as an empty array
+const storedHabits = JSON.parse(localStorage.getItem("habits")) || [];
+const habits = storedHabits;
+
+// Reset habits at midnight and store daily habit data
+resetHabitsAtMidnight();
+
+// Reset habits weekly
+resetHabitsWeekly();
+
+// Display stored habits and habit-table
+showStoredHabits(habits);
+updateTableUI(habits);
+
+// Event listeners
+addButtonList.forEach((button) => button.addEventListener("click", addHabit));
+clearDataBtn.addEventListener("click", clearUserData);
+userhabitsSection.addEventListener("click", (event) => {
+  if (event.target.classList.contains("remove-habit")) removeHabit(event);
+  if (event.target.classList.contains("check-habit")) completeHabit(event);
+});
+
+getPdfBtn.addEventListener('click', generatePDF);
+
+
+
+// Functions
+
+
 function setUserName() {
   if (!localStorage.getItem("hasVisited")) {
     const username = prompt("Velkommen til din personlige HabitTracker! Hva heter du?");
@@ -18,24 +52,14 @@ function setUserName() {
   }
 }
 
-// Set user's name
-setUserName();
-
-//user-data
-const username = localStorage.getItem("username");
-
-// Get stored habits from local storage or set it as an empty array
-const storedHabits = JSON.parse(localStorage.getItem("habits")) || [];
-const habits = storedHabits;
-
-// Function to check if a habit is completed today
 function isHabitCompletedToday(habitObj) {
   const today = new Date();
   const currentDate = today.toISOString().slice(0, 10);
   return habitObj.completedDates.includes(currentDate);
 }
 
-// Reset habits at midnight and store daily habit data
+//Reset habits to not completed at midnight
+
 function resetHabitsAtMidnight() {
   const now = new Date();
   const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
@@ -59,8 +83,7 @@ function resetHabitsAtMidnight() {
   }, timeToNextMidnight);
 }
 
-// Call the function to reset habits at midnight
-resetHabitsAtMidnight();
+//Reset Weekly Tracker each week
 
 function resetHabitsWeekly() {
   const now = new Date();
@@ -77,84 +100,77 @@ function resetHabitsWeekly() {
   }, timeToNextMonday);
 }
 
-// Call the function to reset habits weekly
-resetHabitsWeekly();
+//ShowTheStoredHabits from localStorage
 
-
-// Function to show stored habits
 function showStoredHabits(habits) {
   habits.forEach((habitObj) => {
     const newLi = document.createElement("li");
     newLi.classList.add("checkbox-container");
     newLi.innerHTML = `
         <label for="${habitObj.habit}-button">${habitObj.habit}</label>
-        <button class="check-habit ${
-          isHabitCompletedToday(habitObj) ? "completed" : ""
-        }" id="${habitObj.habit}-button" name="myCheckbox" value="${
+        <div class="habit-btns-div">
+          <button class="check-habit habit-btns ${
+            isHabitCompletedToday(habitObj) ? "completed" : ""
+          }" id="${habitObj.habit}-button" name="myCheckbox" value="${
       habitObj.habit
-    }"></button>
-        <button class="remove-habit">X</button>
+    }">&#x2713;</button>
+          <button class="remove-habit habit-btns">X</button>
+        </div>
       `;
     userhabitsSection.appendChild(newLi);
   });
 }
 
-// Function to clear user data
+
+//Function that clears userdata on btn click
+
 function clearUserData() {
   localStorage.clear();
   location.reload();
 }
 
-// Add event listener to clear user data button
-clearDataBtn.addEventListener("click", clearUserData);
+// Function to add a habit
 
-// Display stored habits and habit-table
-showStoredHabits(habits);
-updateTableUI(habits);
+function addHabit(event) {
+  event.preventDefault();
+  const participantContainer = event.target.closest(".p-container");
+  const inputField = participantContainer.querySelector('input[type="text"]');
+  const inputValue = inputField.value.trim();
 
-// Add event listener for add button
-addButtonList.forEach(function (button) {
-  button.addEventListener("click", function (event) {
-    event.preventDefault();
-    const participantContainer = this.closest(".p-container");
-    const inputField = participantContainer.querySelector('input[type="text"]');
-    const inputValue = inputField.value.trim();
+  if (inputValue !== "") {
+    if (!habits.find((h) => h.habit === inputValue)) {
+      habits.push({
+        habit: inputValue,
+        completedDates: [],
+        createdAt: new Date().toISOString(),
+      });
 
-    if (inputValue !== "") {
-      if(!habits.find(h => h.habit === inputValue)) {
+      localStorage.setItem("habits", JSON.stringify(habits));
 
-        // When adding a new habit
-        habits.push({habit: inputValue, completedDates: [], createdAt: new Date().toISOString()});
-  
-        localStorage.setItem("habits", JSON.stringify(habits));
-  
-        const toDoList = userhabitsSection;
-        const newLi = document.createElement("li");
-        newLi.classList.add("checkbox-container");
-        newLi.innerHTML = `
-          <label for="${inputValue}-button">${inputValue}</label>
-          <div class="habit-btns-div">
-          <button class="check-habit habit-btns" id="${inputValue}-button" name="myCheckbox" value="${inputValue}">&#x2713;</button>
-          <button class="remove-habit habit-btns">X</button>
-          </div>
-        `;
-        toDoList.appendChild(newLi);
-        newLi.querySelector(".remove-habit").addEventListener("click", removeHabit);
+      const toDoList = userhabitsSection;
+      const newLi = document.createElement("li");
+      newLi.classList.add("checkbox-container");
+      newLi.innerHTML = `
+        <label for="${inputValue}-button">${inputValue}</label>
+        <div class="habit-btns-div">
+        <button class="check-habit habit-btns" id="${inputValue}-button" name="myCheckbox" value="${inputValue}">&#x2713;</button>
+        <button class="remove-habit habit-btns">X</button>
+        </div>
+      `;
+      toDoList.appendChild(newLi);
+      newLi.querySelector(".remove-habit").addEventListener("click", removeHabit);
 
-        updateTableUI(habits);
-  
-        inputField.value = "";
-      } else {
-        alert("Habit is already added.");
-      }
+      updateTableUI(habits);
+
+      inputField.value = "";
+    } else {
+      alert("Habit is already added.");
     }
-  });
-});
+  }
+}
 
+//Function to remove habit thats targeted by the user
 
-
-
-// Function to remove a habit
 function removeHabit(event) {
   const habitLi = event.target.closest("li");
   const habitButton = habitLi.querySelector("button.check-habit");
@@ -177,22 +193,9 @@ function removeHabit(event) {
     updateTableUI(habits);
 }
 
-// Event listener for removing a habit
-userhabitsSection.addEventListener("click", function (event) {
-  if (event.target.classList.contains("remove-habit")) {
-    const habitIndex = Array.from(userhabitsSection.children).indexOf(event.target.closest("li"));
-    removeHabit(event, habitIndex);
-  }
-});
-
-
-// Event listener for checking a habit
+//Function for completing habit. 
 
 function completeHabit(event) {
-
-} 
-
-userhabitsSection.addEventListener("click", function (event) {
   if (event.target.classList.contains("check-habit")) {
     event.target.classList.toggle("completed");
 
@@ -212,10 +215,11 @@ userhabitsSection.addEventListener("click", function (event) {
       updateTableUI(habits);
     }
   }
-});
+}
 
 
 //Update Data-table UI
+
 function updateTableUI(habitsArr) {
     // Remove all rows that correspond to removed habits
     Array.from(habitTableBody.children).forEach((row, index) => {
@@ -272,9 +276,9 @@ function updateTableUI(habitsArr) {
           setTimeout(() => {
             dayCell.textContent = newContent;
 
-            // Remove the fade class to smoothly show the content
+            // Removes the fade class to smoothly show the content
             dayCell.classList.remove("fade");
-          }, 500); // Match this duration with the transition duration in the CSS
+          }, 300); // Matches this duration with the transition duration in the CSS
         }
       } else {
         dayCell.textContent = "";
@@ -283,9 +287,8 @@ function updateTableUI(habitsArr) {
   });
 }
 
-
-
 //Generating and working with the pdf
+
 getPdfBtn.addEventListener('click', generatePDF);
 
 function generatePDF() {
