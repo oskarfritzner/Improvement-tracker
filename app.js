@@ -6,6 +6,22 @@ const getPdfBtn = document.getElementById('get-pdf-btn');
 const userhabitsSection = document.getElementById("user-habits-section");
 const habitTableBody = document.querySelector(".user-table tbody");
 
+const savedUserGoals = [];
+const savedThankfulNotes = [];
+
+const goalsInputsContainer = document.querySelector(".goals-container");
+const goalInputs = goalsInputsContainer.querySelectorAll("input")
+
+goalsInputsContainer.addEventListener("click", () => {
+  goalInputs.forEach((goalInput) => {
+    goalInput.addEventListener("input", (event) => {
+      const newGoal = event.target.value;
+      return localStorage.setItem(savedUserGoals, newGoal);
+    })
+
+  })
+})
+
 // Set user's name
 setUserName();
 
