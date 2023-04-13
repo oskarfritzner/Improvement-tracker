@@ -163,7 +163,7 @@ h2 {
 
 .remove-habit {
     font-size: 10px;
-    background-color: rgb(245, 60, 60);
+    background-color: rgb(255, 205, 205);
     height: 30px;
     width: 30px;
 }
@@ -197,7 +197,7 @@ h2 {
 .check-habit {
     width: 30px;
     border: 1px solid black;
-    background-color: transparent;
+    background-color: #6bff7013;
     transition: background-color 0.3s;
 }
 
@@ -234,7 +234,7 @@ h2 {
 
 
 .goals-container .goals-input, .thankful-container .thankful-input {
-    border: 1px solid rgba(177, 177, 177, 0.445);
+    border: none;
     width: 90%;
     margin-left: 10px;
     background-color: #2c3e5000;
@@ -260,9 +260,32 @@ h2 {
 
 /*Quotes section*/
 .quotes-container {
-    display: none;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column; /* Add this line */
     grid-area: quotes-container;
-    color: black
+    color: black;
+    justify-content: center; /* center horizontally */
+    align-items: center; /* center vertically */
+    margin: 0;
+    padding: 0;
+}
+
+
+.quotes-container p {
+    text-align: center;
+    max-width: 100%;
+    height: 25px; /* you can adjust this value as needed */
+    padding: 0 1rem; /* add some padding around the text if needed */
+    margin: 0; /* remove any default margin */
+    margin-top: 40px;
+}
+
+
+/*Update input effect*/
+.goals-container:hover .goals-input, .thankful-container:hover .thankful-input {
+    border: 1px solid rgba(177, 177, 177, 0.445);
 }
 
 /*User-table-container*/

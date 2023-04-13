@@ -9,18 +9,8 @@ const habitTableBody = document.querySelector(".user-table tbody");
 const savedUserGoals = [];
 const savedThankfulNotes = [];
 
-const goalsInputsContainer = document.querySelector(".goals-container");
-const goalInputs = goalsInputsContainer.querySelectorAll("input")
-
-goalsInputsContainer.addEventListener("click", () => {
-  goalInputs.forEach((goalInput) => {
-    goalInput.addEventListener("input", (event) => {
-      const newGoal = event.target.value;
-      return localStorage.setItem(savedUserGoals, newGoal);
-    })
-
-  })
-})
+const goalsInputs = document.querySelectorAll(".goals-input");
+const thankfulInputs = document.querySelectorAll(".thankful-input");
 
 // Set user's name
 setUserName();
@@ -156,7 +146,7 @@ function addHabit(event) {
   const inputValue = inputField.value.trim();
 
   if (habits.length === 8) {
-    alert("Studies have shown that its better to focus on changing smaller amounts of time. We therefore only allow maximum 8 habits at the time.")
+    alert("Studies have shown that its better to focus on changing smaller amounts of things at the same time. We therefore only allow maximum 8 habits at the time.")
     return inputValue.value = "";
   }
 
@@ -391,5 +381,51 @@ function updateQuotesContainerVisibility() {
 
 // Add an event listener to update the visibility when the window is resized
 window.addEventListener('resize', updateQuotesContainerVisibility);
+
+//Goals and thankful section
+function saveDataToLocalStorage(key, dataArray) {
+  localStorage.setItem(key, JSON.stringify(dataArray));
+}
+
+function getDataFromlocalStorage(key) {
+  return JSON.parse(localStorage.getItem(key)) || [];
+}
+
+function handleInputEvent(event, inputClass, storageKey) {
+  const userInput = event.target.value;
+  const index = Array.from(document.querySelectorAll(inputClass)).indexOf(event.target);
+  const storedData = getDataFromlocalStorage(storageKey);
+
+  if(storedData[index]) {
+    storedData[index].value = userInput;
+  } else {
+    storedData.push({value: userInput});
+  }
+
+  saveDataToLocalStorage(storageKey, storedData);
+}
+
+function displayStoredData(inputClass, storageKey) {
+  const storedData = getDataFromlocalStorage(storageKey);
+  const inputs = document.querySelectorAll(inputClass);
+
+  inputs.forEach((input, index) => {
+    if(storedData[index]) {
+      input.value = storedData[index].value;
+    }
+  })
+}
+
+document.querySelectorAll('.goals-input').forEach(input => {
+  input.addEventListener("input", event => handleInputEvent(event, '.goals-input', 'goals'));
+});
+
+document.querySelectorAll('.thankful-input').forEach(input => {
+  input.addEventListener('input', event => handleInputEvent(event, '.thankful-input', 'thankful'));
+});
+
+displayStoredData('.goals-input', 'goals');
+displayStoredData('.thankful-input', 'thankful');
+
 
 
