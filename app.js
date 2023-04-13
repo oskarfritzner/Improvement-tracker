@@ -40,9 +40,7 @@ userhabitsSection.addEventListener("click", (event) => {
 getPdfBtn.addEventListener('click', generatePDF);
 
 
-
 // Functions
-
 
 function setUserName() {
   if (!localStorage.getItem("hasVisited")) {
@@ -367,7 +365,7 @@ function updateQuotesContainerVisibility() {
   const goalsContainer = document.querySelector('.goals-container');
   const quotesContainer = document.querySelector('.quotes-container');
 
-  if(habits.length <= 2) {
+  if(habits.length <= 3) {
     quotesContainer.style.display = "none";
   } else {
     quotesContainer.style.display = "block";

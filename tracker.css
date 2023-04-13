@@ -70,19 +70,22 @@ a {
 /*Container around all participants*/
 
 .to-do-container {
+    width: 100%;
     display: grid;
-    grid-template-columns: 50% 25% 25%;
-    grid-template-rows: auto auto;
+    grid-template-columns: 48% 24% 24%;
+    grid-template-rows: auto auto auto;
     grid-template-areas:
-      "p-container goals-container thankful-container"
-      "p-container quotes-container quotes-container";
-    column-gap: 1rem;
-    row-gap: 1rem;
+      "p-container goals-container goals-container"
+      "p-container thankful-container thankful-container"
+      " quotes-container quotes-container quotes-container";
+    column-gap: 2%;
+    row-gap: 2%;
 }
 
 /*Habits section*/
 
 .p-container {
+    height: 600px;
     grid-area: p-container;
     border: 1px solid black;
     border-radius: 20px;
@@ -91,11 +94,10 @@ a {
     text-align: center;
     flex-direction: column;
     align-items: center;
-
 }
 
 h2 {
-    padding-top: 10px;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
@@ -136,6 +138,8 @@ h2 {
     width: 80%;
     margin-top: 20px;
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .checkbox-container {
@@ -146,7 +150,7 @@ h2 {
     text-align: center;
     align-items: flex-start;
     justify-content: space-between;
-    margin-top: 10px;
+    margin-top: 4%;
 }
 
 .habit-div {
@@ -210,7 +214,6 @@ h2 {
 .goals-container {
     grid-area: goals-container;
     border: 1px solid black;
-    height: 300px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     display: flex;
@@ -219,21 +222,24 @@ h2 {
     justify-content: space-between;
 }
 
-.goals-container .goals-input {
+
+.goals-container .goals-input, .thankful-container .thankful-input {
+    border: 1px solid rgba(163, 162, 162, 0.712);
     margin: 0 10px;
+    width: 80%;
+    background-color: #2c3e5000;
     padding-left: 5px;
 }
 
 .goals-container h3, .thankful-container h3{
-    font-size: 22px;
-    margin-top: 40px;
+    font-size: 25px;
+    margin-top: 22px;
 }
 
 /*Thankful container*/
 .thankful-container {
     grid-area: thankful-container;
     border: 1px solid black;
-    height: 300px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     display: flex;
@@ -242,14 +248,11 @@ h2 {
     
 }
 
-.thankful-container .thankful-input {
-    margin: 0 10px;
-}
-
 /*Quotes section*/
 .quotes-container {
     display: none;
     grid-area: quotes-container;
+    color: black
 }
 
 /*User-table-container*/
