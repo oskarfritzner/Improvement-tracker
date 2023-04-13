@@ -26,6 +26,9 @@ resetHabitsWeekly();
 showStoredHabits(habits);
 updateTableUI(habits);
 
+// Call the function initially to set the correct visibility for the quotes container
+updateQuotesContainerVisibility();
+
 // Event listeners
 addButtonList.forEach((button) => button.addEventListener("click", addHabit));
 clearDataBtn.addEventListener("click", clearUserData);
@@ -138,6 +141,11 @@ function addHabit(event) {
   const inputField = participantContainer.querySelector('input[type="text"]');
   const inputValue = inputField.value.trim();
 
+  if (habits.length === 8) {
+    alert("Studies have shown that its better to focus on changing smaller amounts of time. We therefore only allow maximum 8 habits at the time.")
+    return inputValue.value = "";
+  }
+
   if (inputValue !== "") {
     if (!habits.find((h) => h.habit === inputValue)) {
       habits.push({
@@ -166,6 +174,7 @@ function addHabit(event) {
       newLi.querySelector(".remove-habit").addEventListener("click", removeHabit);
 
       updateTableUI(habits);
+      updateQuotesContainerVisibility();
 
       inputField.value = "";
     } else {
@@ -183,19 +192,18 @@ function removeHabit(event) {
   const habitIndex = habits.findIndex(habitObj => habitObj.habit === habitValue);
 
   if (habitIndex > -1) {
-    const habitObj = habits[habitIndex];
-    if (habitObj.completedDates.length <= 1) {
-      habits.splice(habitIndex, 1);
-      localStorage.setItem("habits", JSON.stringify(habits));
-    }
+    habits.splice(habitIndex, 1);
+    localStorage.setItem("habits", JSON.stringify(habits));
     habitLi.remove();
   }
-    // Remove the corresponding row from the table UI
-    if (habitTableBody.children[habitIndex]) {
-      habitTableBody.children[habitIndex].remove();
-    }
   
-    updateTableUI(habits);
+  // Remove the corresponding row from the table UI
+  if (habitTableBody.children[habitIndex]) {
+    habitTableBody.children[habitIndex].remove();
+  }
+
+  updateTableUI(habits);
+  updateQuotesContainerVisibility();
 }
 
 // Function for completing habit
@@ -324,9 +332,6 @@ function generatePDF() {
   });
 }
 
-
-document.getElementById('get-pdf-btn').addEventListener('click', generatePDF);
-
 //calculate the time per habit
 
 function calculateTimePerHabit() {
@@ -357,23 +362,18 @@ function calculateTimePerHabit() {
 const total = calculateTimePerHabit();
 console.log(total);
 
-
-/*fix this next time*/
 function updateQuotesContainerVisibility() {
   const pContainer = document.querySelector('.p-container');
   const goalsContainer = document.querySelector('.goals-container');
-  const thankfulContainer = document.querySelector('.thankful-container');
   const quotesContainer = document.querySelector('.quotes-container');
 
-  if (pContainer.offsetHeight > (goalsContainer.offsetHeight)) {
-    quotesContainer.style.display = 'block';
+  if(habits.length <= 2) {
+    quotesContainer.style.display = "none";
   } else {
-    quotesContainer.style.display = 'none';
+    quotesContainer.style.display = "block";
   }
 }
 
-// Call the function initially to set the correct visibility
-updateQuotesContainerVisibility();
 
 // Add an event listener to update the visibility when the window is resized
 window.addEventListener('resize', updateQuotesContainerVisibility);

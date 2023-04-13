@@ -90,7 +90,6 @@ a {
     display: flex;
     text-align: center;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 
 }
@@ -249,9 +248,8 @@ h2 {
 
 /*Quotes section*/
 .quotes-container {
-    grid-area: quotes-container;
-    border: 1px solid black;
     display: none;
+    grid-area: quotes-container;
 }
 
 /*User-table-container*/

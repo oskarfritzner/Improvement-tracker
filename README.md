@@ -45,7 +45,6 @@ I therefore decided to solve this problem by trying to create the improvement tr
 * CSS
 * BOOTSTRAP
 * JAVASCRIPT
-* 
 
 <!-- GETTING STARTED -->
 ## Getting Started
