@@ -2,7 +2,6 @@
 
 <h1>Improvement Tracker</h1>
 
-
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -46,7 +45,6 @@ I therefore decided to solve this problem by trying to create the improvement tr
 * CSS
 * BOOTSTRAP
 * JAVASCRIPT
-* 
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -57,10 +55,14 @@ To get a local copy up and running follow these simple example steps.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-<!-- ROADMAP -->
+<!-- Progress -->
 ## PROGRESS
 
+<!--Learning-->
+<p>
 
+
+</p>
 <!-- CONTRIBUTING -->
 ## Contributing
 

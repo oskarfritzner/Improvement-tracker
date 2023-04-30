@@ -1,5 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+body {
+    background-color: #f1f1ee;
+    position: relative;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+/*All navbar styling*/
+
+.nav-tracker {
+    color: #c13c28;
+}
+
+.nav-btns {
+    width: 100px;
+    font-weight: 600;
+    margin: 0 5px;
+    border-radius: 20px;
+
+}
+
+#clear-local-btn {
+    background-color: #c13c28;
+    color: white;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#clear-local-btn:hover {
+    background-color: #e05745;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#get-pdf-btn {
+    background-color: #2c3e50;
+    color: white;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  #get-pdf-btn:hover {
+    background-color: #34495e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
 /*To-do-section*/
 /*Container around the whole div*/
+
+
 .to-do-list {
     text-align: center;
 }
@@ -11,66 +70,267 @@
 /*Container around all participants*/
 
 .to-do-container {
-    display: flex;
-    max-width: 100%;
-    margin: 10px;
-    justify-content: space-evenly;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 48% 24% 24%;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "p-container goals-container goals-container"
+      "p-container thankful-container thankful-container"
+      " quotes-container quotes-container quotes-container";
+    column-gap: 2%;
+    row-gap: 2%;
 }
 
-/*Each participants container of habits and the childs styling*/
+/*Habits section*/
 
 .p-container {
+    height: 600px;
+    grid-area: p-container;
     border: 1px solid black;
-    width: 40%;
     border-radius: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
 }
 
-.p-container h2{
-    padding-top: 10px;
+h2 {
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
 .p-container .add-habit-container {
-    width: 100%;
+    height: 40px;
+    width: 80%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
 }
 
 .p-container .habit-inputs {
-    width: 80%;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
+    width: 60%;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     height: 40px;
     padding-left: 10px;
     border-radius: 20px;
 }
 
 .p-container .add-to-do-btn {
-    padding: 0 10px;
-    border-radius: 10%;
+    background-color: #eda739;
+    width: 60px;
+    height: 40px;
+    border-radius: 20px;
 }
 
 .add-to-do-btn:hover {
-    background-color: #eda739;
-    transition: 0.5s ease;
+    background-color: #ffd38d;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
+
 .p-container .to-do {
+    margin: 0;
+    padding: 0;
+    width: 80%;
     margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
 }
 
 .checkbox-container {
-    list-style: none;
-    font-size: 1.2em;
-    margin-bottom: 5px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    text-align: center;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 4%;
+}
+
+.habit-div {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.remove-habit {
+    font-size: 10px;
+    background-color: rgb(255, 205, 205);
+    height: 30px;
+    width: 30px;
+}
+
+.remove-habit:hover {
+    background-color: red;
+    font-size: 16px;
 }
 
 .checkbox-container label {
+    margin-left: 20px;
+    font-size: 20px;
+    text-align: start;
+    width: 250px;
+    word-wrap: break-word;
+}
+
+.complete-div {
+    width: 200px;
+    height: 30px;
+    display: flex;
+    justify-content: end;
+    
+}
+
+.habit-time {
+    width: 50px;
     margin-right: 5px;
 }
+
+.check-habit {
+    width: 30px;
+    border: 1px solid black;
+    background-color: #6bff7013;
+    transition: background-color 0.3s;
+}
+
+.check-habit.completed {
+    background-color: #6bff70;
+    color: #fff;
+  }
+
+.check-habit.completed:hover {
+    background-color: #6bff706c;
+}
+
+/*Goals section*/
+.goals-container {
+    grid-area: goals-container;
+    border: 1px solid black;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.input-goals-div, .input-thankful-div {
+    width: 100%;
+    height: 60px;
+    text-align: start;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.goals-container .goals-input, .thankful-container .thankful-input {
+    border: none;
+    width: 90%;
+    margin-left: 10px;
+    background-color: #2c3e5000;
+    padding-left: 5px;
+}
+
+.goals-container h3, .thankful-container h3{
+    font-size: 25px;
+    margin-top: 22px;
+}
+
+/*Thankful container*/
+.thankful-container {
+    grid-area: thankful-container;
+    border: 1px solid black;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+
+/*Quotes section*/
+.quotes-container {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column; /* Add this line */
+    grid-area: quotes-container;
+    color: black;
+    justify-content: center; /* center horizontally */
+    align-items: center; /* center vertically */
+    margin: 0;
+    padding: 0;
+}
+
+
+.quotes-container p {
+    text-align: center;
+    max-width: 100%;
+    height: 25px; /* you can adjust this value as needed */
+    padding: 0 1rem; /* add some padding around the text if needed */
+    margin: 0; /* remove any default margin */
+    margin-top: 40px;
+}
+
+
+/*Update input effect*/
+.goals-container:hover .goals-input, .thankful-container:hover .thankful-input {
+    border: 1px solid rgba(177, 177, 177, 0.445);
+}
+
+/*User-table-container*/
+
+.user-table-container {
+    margin: 50px 0 50px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+    text-align: center;
+}
+
+.user-table {
+    border-collapse: collapse;
+    width: 90%;
+    margin-bottom: 40px;
+  }
+  
+  .user-table th,
+  .user-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+
+  .user-table td {
+    width: 12.5%;
+  }
+  
+  .user-table thead {
+    background-color: #f2f2f2;
+  }
+  
+  .user-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .fade {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  
 
 @media screen and (max-width: 800px) {
     .to-do-container {
@@ -83,6 +343,3 @@
         width: 100%;
     }
   }
-
-  /*Calender-section*/
-  

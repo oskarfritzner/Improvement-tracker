@@ -1,0 +1,44 @@
+<span>07.04.2023</span> Currently only focusing on the styling. Ive also researched how i can create a loggin system with only knowing a small amount of java.
+  Think its going to be firebase, so i will need to learn this and how it works.
+
+  Notes from first youtube video: 
+  - you need node.js on your computer. 
+  - create project on firebase.
+  - manage resources from here
+
+08.04.2023 - 
+Okay så etter å ha utforsket hva som trengs for å bruke firebase, skjønner jeg at jeg at det er par ting jeg bør skjønne litt bedre. 
+1. Asyncronomisk code meaning that the action will not be executed syncronomously with the code, but rather happen at some stage.
+
+09.04.2023 - gjorde om prosjektet Improvement tracker til en solo versjon ved bruk av localStorage. Dette for å lære mer om dette og hvordan det fungerer samt og få gjort ferdig en del av prosjektet. 
+Vanskelighetsgraden passet bedre, og jeg har idag lært masse. 
+
+Jeg har hittil kl.15.15
+- lagd funksjon for å lagre brukernavn i localstorage ved hjelp av prompt.
+- Gjort om js koden til å lagre habits i localstorage slik at disse alltid vises når bruker som har vært her tidligere får disse opp. 
+- Lagd localstorage.clear funksjon. 
+- editet designet. 
+
+Planen for prosjektet videre er at man skal kunne ticke av hver dag for når en har gjort en habit.
+Mna skal kunne ha mulighet til å skrive ut pdf med dataen sin når mna vil, og den kan også sendes hver uke(eller kanskje det går å sende rett før det blir slutt for å ikke miste data? <undersøk funksjon videre>)
+
+Jeg har hittl 15.15
+Lagd en funksjon for å sende til pdf så dette fungerer som det skal. 
+Lagt om til at habits også skal lagre en array med hvilket datoer den skal lagre. Disse kan brukes til å skrive ut til tabell senere, eller kanskje importere en kalender og jobbe med den?
+
+Neste gang må jeg:
+- fikse slette funksjonen så den også sletter habitten fra table. 
+- Adde check eller ikke fullført på hver habit den dagen det gjelder. 
+- Finne ut hvordan jeg kan skrive ut html av table til pdf så det ser fint ut. 
+- style siden bedre. 
+
+10.04.23
+
+Fikset 1 og 2 planlagt i går ved å legge til en UpdateTableUi Funksjon. Denne la jeg inn der hvor dataen oppdateres slik at det også oppdaterer table. 
+Jeg har også lagt på en effect så den oppdaterer seg smoothly når en forandrer på dagens status. 
+Jeg har endret på styling slik at Habits leggeer seg med likt space bettween og knappene ligger fint ved siden av hverandre. 
+Jeg har også opprettet en funksjon for å reset table UI hver uke SLik at det blir en weekly tracker. 
+
+endret veldig mye idag og fikset de viktigste delene. pdt fungerer fint og alt av habit adding og removing fra ui.
+ Har lagt til goals og thankful for sections, samt en quotes section jeg vil ha hidden fremtil p.container har lengre x lengde enn goals-containeren men problem her... 
+

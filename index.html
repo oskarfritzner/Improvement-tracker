@@ -8,14 +8,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
     rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" 
     crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.3/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="tracker.css">
 </head>
 <body>
 <!-- Navbar -->
 <header>
-  <nav class="navbar navbar-expand-lg py-3 nav-container mx-15">
-    <div class="container">
+  <nav class="navbar navbar-expand-lg py-3 nav-container">
+    <div class="container m-0">
       <a href="#" class="nav-logo">Monthly Madness</a>
 
       <button
@@ -30,28 +30,103 @@
       <div class="collapse navbar-collapse" id="navmenu">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a href="index.html" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item">
             <a href="tracker.html" class="nav-link nav-tracker">Tracker</a>
           </li>
+          <button class="nav-btns" id="clear-local-btn">Start over</button>
+          <button class="nav-btns" id="get-pdf-btn">Get pdf</button>
         </ul>
       </div>
     </div>
   </nav>
 </header>
 
-<section class="main-section">
-  <div class="text-container">
-    <h1>Welcome champ!</h1>
-    <p class="statement">Enhance your potential and progress, with our fully optimized improvement tracker.</p>
-    <button type="button" class="btn go-to-btn"><a href="tracker.html">Go to Tracker</a></button>
-  </div>
-</section>
+<section class="to-do-list">
+    <div>
+      </div>
+        <div class="to-do-container">
+            <div class="p-container">
+                  <h2 id="user-name-h2"><span id="user-name-h1"></span> Daily Habits</h2>
+                  <p>Enter your habits here, and tick them of everyday. </p>
+            <form class="add-habit-container">
+                  <input class="habit-inputs" type="text" id="p1-input" placeholder="Enter a new habit">
+                    <button class="add-to-do-btn" type="submit">Add</button>
+              </form>
+              <ul id="user-habits-section" class="to-do">
 
+                </ul>
+            </div>
+            <div class="goals-container">
+              <h3>My goals for today are...</h3>
+              <div class="input-goals-div">
+                <label>1.</label><input type="text" class="goals-input" id="goals-input1">
+              </div>
+              <div class="input-goals-div">
+                <label>2.</label><input type="text" class="goals-input" id="goals-input2">
+              </div>
+              <div class="input-goals-div">
+                <label>3.</label><input type="text" class="goals-input" id="goals-input3">
+              </div>
+              <div>
+              </div>
+            </div>
+
+            <div class="thankful-container">
+              <h3>Today i am thankfull for...</h3>
+              <div class="input-thankful-div">
+                  <label>1.</label><input type="text" class="thankful-input" id="tfinput1">
+              </div>
+              <div class="input-thankful-div">
+                  <label>2.</label><input type="text" class="thankful-input" id="tfinput2">
+              </div>
+              <div class="input-thankful-div">
+                  <label>3.</label><input type="text" class="thankful-input" id="tfinput3">
+              </div>
+              <div>
+              </div>
+            </div>
+
+            <div class="quotes-container">
+              <p id="daily-quotes-output">Daily quotes section coming here soon</p>
+            </div>
+          </div>
+      </section>
+      
+      <div class="user-table-container">
+          <h2>Weekly Tracker</h2>
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th>Habits</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Add table rows for habit completion status here -->
+            </tbody>
+          </table>              
+        </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <script src="app.js"></script>
+    <script>
+      (function (global) {
+        var script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js';
+        script.onload = function () {
+          global.jsPDF = window.jspdf.jsPDF;
+          var scriptApp = document.createElement('script');
+          scriptApp.src = 'app.js';
+          document.body.appendChild(scriptApp);
+        };
+        document.head.appendChild(script);
+      })(window);
+    </script>
+    
 </body>
 </html>

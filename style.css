@@ -1,30 +1,52 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
-
-* {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    font-family: 'Josefin Sans', sans-serif;
-}
-
-body {
-    background-color: #f1f1ee;
+.main-section {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
-    margin-left: 10%;
-    margin-right: 10%;
 }
 
-a {
-    text-decoration: none;
+.text-container {
+    height: 50%;
+    font-size: 20px;
     color: black;
+    padding: 50px;
+    width: 50%;
+    text-align: center;
+    display: inline-block;
 }
 
-.nav-container {
-    /*margin-left: 15%;*/
-    /*margin-right: 15%;*/
+#progress-svg {
+    opacity: 0.4;
+    position: absolute;
+    bottom: 50px;
+    left: 25%;
+    z-index: -1;
+    width: 20%;
 }
 
-.nav-tracker {
+
+
+.text-container h1 {
     color: #c13c28;
+
 }
+
+.text-container .statement {
+    padding-top: 10px;
+}
+
+.go-to-btn {
+    background-color: #eda739;
+    border: black 1px dotted; 
+}
+
+.go-to-btn:hover {
+    border: 1px solid black;
+}
+
+@media screen and (max-width: 600px) {
+    .text-container {
+      width: 80%;
+    }
+  }
