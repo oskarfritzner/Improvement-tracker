@@ -20,7 +20,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#progress">Progress</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -37,8 +37,6 @@ A month where we were gonna be accountability partners, and ensure that we would
 I therefore decided to solve this problem by trying to create the improvement tracker for us. 
 </p>
 
-
-
 ### Built With
 
 * HTML
@@ -49,20 +47,25 @@ I therefore decided to solve this problem by trying to create the improvement tr
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Create a clone or copy the code. If you want to use the website the link is: 
+https://oskarfritzner.github.io/Improvement-tracker/
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+The user can add their habits, goals, and journal what their thankful for. 
+The data is stored in their localstorage, and the website displays the weeks tracking. 
+The user can also export a pdf with the data for the week. 
+
 <!-- Progress -->
 ## PROGRESS
-
 <!--Learning-->
 <p>
-
-
+It was the first project that i spent weeks to create, which meant i learned a lot about project management, taking notes on the progress and what i had to do the next time i was to code on it. 
+I learned a little about bootstrap.
+I learned a lot about working with dates, and how to export to pdf using a library. 
 </p>
+
 <!-- CONTRIBUTING -->
 ## Contributing
 
@@ -88,7 +91,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- CONTACT -->
 ## Contact
-oskarfritznerprofile@gmail.com
+oskargoescoding@gmail.com
 
 
 <!-- ACKNOWLEDGMENTS -->
