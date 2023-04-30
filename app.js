@@ -331,7 +331,7 @@ function generatePDF() {
       pdf.save('Weekly_Tracker.pdf');
     },
     x: 0,
-    y: 80,
+    y: 150,
     html2canvas: { scale: 0.49},
   });
 }
